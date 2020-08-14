@@ -1,4 +1,3 @@
-import { parseArgs } from "./src/utils.js";
 import readline from "readline";
 
 console.clear();
@@ -9,12 +8,20 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
-function getEstimate({ best, nominal, worst }) {
-  return (parseInt(best) + 4 * parseInt(nominal) + parseInt(worst)) / 6;
+function roundNum(num) {
+  return (Math.round(num * 100) / 100).toFixed(2);
+}
+
+function getEstimate({ best, likey, worst }) {
+  const res = (parseInt(best) + 4 * parseInt(likey) + parseInt(worst)) / 6;
+
+  return roundNum(res);
 }
 
 function getDeviation(best, worst) {
-  return (parseInt(best) + parseInt(worst)) / 6;
+  const res = (parseInt(best) + parseInt(worst)) / 6;
+
+  return roundNum(res);
 }
 
 const userQueries = [
@@ -23,14 +30,16 @@ const userQueries = [
   { q: "What is the worse case estimate? ", a: "worst" },
 ];
 
-rl.question("What is the best case estimate(days)? ", function (best) {
-  rl.question("What is the nominal(ideal) case estimate? ", function (nominal) {
-    rl.question("What is the worse case estimate? ", function (worst) {
-      log(`best: ${best}, nominal: ${nominal}, worst: ${worst}`);
+rl.question("What is optimistic time(best case) time? ", function (best) {
+  rl.question("What is most likely time? ", function (likey) {
+    rl.question("What is passimistic time(worst case) time? ", function (
+      worst
+    ) {
+      log(`best: ${best}, likey: ${likey}, worst: ${worst}`);
       console.log(
         `\nEstimated time for completion: ${getEstimate({
           best,
-          nominal,
+          likey,
           worst,
         })}\nStandard deviation of the estimate: ${getDeviation(best, worst)}`
       );
