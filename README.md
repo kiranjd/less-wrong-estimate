@@ -8,7 +8,7 @@
 
 Preferred:
 ```
-npx less-wrong-estimate -p <optimistic time> -m <most likey time> -o <optimistic time>
+npx less-wrong-estimate -o <optimistic(best case) time> -m <most likey time> -p <passimistic(worst case) time>
 ```
 Using npm:
 ```
