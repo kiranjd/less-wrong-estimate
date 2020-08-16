@@ -28,6 +28,21 @@ module.exports = () => {
     },
   });
 
+  if (args.h) {
+    console.log(
+      `
+Usage
+$ less-wrong-estimate -o <optimistic(best case) time> -m <most likey time> -p <passimistic(worst case) time>
+
+Options
+--optimistic, -o  Optimistic time estimate
+--most-likey, -m  Most-likey time estimate
+--optimistic, -p  Optimistic time estimate
+`
+    );
+    return;
+  }
+
   try {
     const [opti, mostly, pessi] = [
       parseInt(args.o),
